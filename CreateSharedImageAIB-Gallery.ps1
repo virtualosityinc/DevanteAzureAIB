@@ -14,7 +14,7 @@ $BNPlocation="eastus"
 $BNPrunOutputName="BNPaibCustWin10ManImgWVD"
 
 # Image template name
-$BNPimageTemplateName="VDI-image-testenv-08122020"
+$BNPimageTemplateName="WVDimageR01"
 
 # Distribution properties object name (runOutput).
 # This gives you the properties of the managed image on completion.
@@ -42,7 +42,7 @@ New-AzGallery `
 
 # Create the image definition
 New-AzGalleryImageDefinition `
-   -GalleryName $sigGalleryName `
+   -GalleryName $BNPsigGalleryName `
    -ResourceGroupName $BNPimageResourceGroup `
    -Location $BNPlocation `
    -Name $BNPimageDefName `
