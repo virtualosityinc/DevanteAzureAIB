@@ -79,3 +79,41 @@ Invoke-WebRequest `
 <#(Get-Content -path $BNPtemplateFilePath -Raw ) `
    -replace '<region2>',$BNPreplRegion2 | Set-Content -Path $BNPtemplateFilePath #>
 ((Get-Content -path $BNPtemplateFilePath -Raw) -replace '<imgBuilderId>',$BNPidentityNameResourceId) | Set-Content -Path $BNPtemplateFilePath
+
+Start-Sleep -Seconds 15
+
+###########################################################
+# Create Image version
+###########################################################
+
+New-AzResourceGroupDeployment `
+   -ResourceGroupName $BNPimageResourceGroup `
+   -TemplateFile $BNPtemplateFilePath `
+   -apiversion "2020-08-13-preview" `
+   -imageTemplateName $BNPimageTemplateName `
+   -svclocation $BNPlocation
+
+Start-Sleep -Seconds 15
+
+
+###########################################################
+# Build Image
+###########################################################
+
+Invoke-AzResourceAction `
+   -ResourceName $BNPimageTemplateName `
+   -ResourceGroupName $BNPimageResourceGroup `
+   -ResourceType Microsoft.VirtualMachineImages/imageTemplates `
+   -ApiVersion "2020-08-13-preview" `
+   -Action Run
+
+Start-Sleep 1800 -Seconds
+
+############################################################
+# Create the VM
+############################################################
+
+$BNPimageVersion = Get-AzGalleryImageVersion `
+   -ResourceGroupName $BNPimageResourceGroup `
+   -GalleryName $BNPsigGalleryName `
+   -GalleryImageDefinitionName $BNPimageDefName
