@@ -14,7 +14,7 @@ $BNPlocation="eastus"
 $BNPrunOutputName="BNPaibCustWin10ManImgWVD"
 
 # Image template name
-$BNPimageTemplateName="WVDimageR01"
+$imageTemplateName="WVDimageR01"
 
 # Distribution properties object name (runOutput).
 # This gives you the properties of the managed image on completion.
@@ -90,7 +90,7 @@ New-AzResourceGroupDeployment `
    -ResourceGroupName $BNPimageResourceGroup `
    -TemplateFile $BNPtemplateFilePath `
    -apiversion "2020-08-13-preview" `
-   -imageTemplateName $BNPimageTemplateName `
+   -imageTemplateName $imageTemplateName `
    -svclocation $BNPlocation
 
 Start-Sleep -Seconds 15
@@ -101,7 +101,7 @@ Start-Sleep -Seconds 15
 ###########################################################
 
 Invoke-AzResourceAction `
-   -ResourceName $BNPimageTemplateName `
+   -ResourceName $imageTemplateName `
    -ResourceGroupName $BNPimageResourceGroup `
    -ResourceType Microsoft.VirtualMachineImages/imageTemplates `
    -ApiVersion "2020-08-13-preview" `
