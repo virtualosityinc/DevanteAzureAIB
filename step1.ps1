@@ -14,7 +14,7 @@ $BNPlocation="eastus"
 $BNPrunOutputName="BNPaibCustWin10ManImgWVD"
 
 # Image template name
-$BNPimageTemplateName="VDI-image-testenv-08122020"
+$imageTemplateName="VDI-image-testenv-08122020"
 
 # Distribution properties object name (runOutput).
 # This gives you the properties of the managed image on completion.
