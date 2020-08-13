@@ -76,7 +76,7 @@ Invoke-WebRequest `
    -replace '<sharedImageGalName>',$BNPsigGalleryName | Set-Content -Path $BNPtemplateFilePath
 (Get-Content -path $BNPtemplateFilePath -Raw ) `
    -replace '<region1>',$BNPlocation | Set-Content -Path $BNPtemplateFilePath
-<#(Get-Content -path $BNPtemplateFilePath -Raw ) `
+<# (Get-Content -path $BNPtemplateFilePath -Raw ) `
    -replace '<region2>',$BNPreplRegion2 | Set-Content -Path $BNPtemplateFilePath #>
 ((Get-Content -path $BNPtemplateFilePath -Raw) -replace '<imgBuilderId>',$BNPidentityNameResourceId) | Set-Content -Path $BNPtemplateFilePath
 
