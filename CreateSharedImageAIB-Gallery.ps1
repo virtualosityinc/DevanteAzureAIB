@@ -59,7 +59,7 @@ Invoke-WebRequest -Uri $aibRoleImageCreationUrl -OutFile $aibRoleImageCreationPa
 New-AzRoleDefinition -InputFile $aibRoleImageCreationPath
 
 # grant role definition to image builder service principal
-New-AzRoleAssignment -ObjectId $identityNamePrincipalId -RoleDefinitionName $imageRoleDefName -Scope "/subscriptions/$BNPsubscriptionID/resourceGroups/$imageResourceGroup"
+New-AzRoleAssignment -ObjectId $identityNamePrincipalId -RoleDefinitionName $imageRoleDefName -Scope "/subscriptions/$subscriptionID/resourceGroups/$imageResourceGroup"
 
 ### NOTE: If you see this error: 'New-AzRoleDefinition: Role definition limit exceeded. No more role definitions can be created.' See this article to resolve:
 # https://docs.microsoft.com/azure/role-based-access-control/troubleshooting
@@ -87,8 +87,8 @@ New-AzGalleryImageDefinition `
    -Name $imageDefName `
    -OsState generalized `
    -OsType Windows `
-   -Publisher 'BNPRCCTEST' `
-   -Offer 'Windows10Enterprise' `
+   -Publisher 'MicrosoftWindowsDesktop' `
+   -Offer 'windows-10' `
    -Sku '19h2-ent'
 
 
@@ -125,12 +125,7 @@ Start-Sleep -Seconds 15
 # Create Image version
 ###########################################################
 
-New-AzResourceGroupDeployment `
-   -ResourceGroupName $imageResourceGroup `
-   -TemplateFile $templateFilePath `
-   -apiversion "2020-08-13-preview" `
-   -imageTemplateName $imageTemplateName `
-   -svclocation $location
+New-AzResourceGroupDeployment -ResourceGroupName AIBrg-rcctest -TemplateFile armTemplateWinSIG.json -apiversion "2020-08-13-preview" -imageTemplateName WVDimageR01 -svclocation eastus
 
 Start-Sleep -Seconds 15
 
@@ -150,9 +145,10 @@ Start-Sleep 1800 -Seconds
 
 ############################################################
 # Create the VM
-############################################################
+<############################################################
 
 $imageVersion = Get-AzGalleryImageVersion `
    -ResourceGroupName $imageResourceGroup `
    -GalleryName $sigGalleryName `
    -GalleryImageDefinitionName $imageDefName
+   #>
