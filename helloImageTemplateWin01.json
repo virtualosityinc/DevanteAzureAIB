@@ -28,8 +28,8 @@
             "type": "PlatformImage",
                 "publisher": "MicrosoftWindowsDesktop",
                 "offer": "Windows-10",
-                "sku": "19h2-evd",
-                "version": "1909"
+                "sku": "19h1-evd",
+                "version": "18363.1016.2008070242"
             
         },
         "customize": [
